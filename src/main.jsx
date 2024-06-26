@@ -18,6 +18,10 @@ if (!PUBLISHABLE_KEY) {
 // React Router setup
 const router = createBrowserRouter([
   {
+    path: "/",
+    element: <Home />,
+  },
+  {
     element: <App />,
     children: [
       {
@@ -25,10 +29,6 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
     ],
-  },
-  {
-    path: "/",
-    element: <Home />,
   },
   {
     path: "/auth/sign-in",
