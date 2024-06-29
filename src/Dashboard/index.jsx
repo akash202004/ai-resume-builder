@@ -11,6 +11,7 @@ const index = () => {
     GlobalApi.getUserResumes(user?.primaryEmailAddress?.emailAddress).then(
       (res) => {
         setResumeList(res.data.data);
+        // console.log(res.data.data);
       }
     );
   };

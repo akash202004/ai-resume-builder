@@ -10,7 +10,7 @@ const EditResume = () => {
   const [resumeInfo, setResumeInfo] = useState();
 
   useEffect(() => {
-    // console.log(parmas);
+    // console.log(parmas.resumeId);
     setResumeInfo(Dummy);
   }, []);
 
