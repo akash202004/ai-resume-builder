@@ -11,13 +11,13 @@ const index = () => {
     GlobalApi.getUserResumes(user?.primaryEmailAddress?.emailAddress).then(
       (res) => {
         setResumeList(res.data.data);
-        // console.log(res.data.data);
+        console.log(res.data.data);
       }
     );
   };
   useEffect(() => {
     user && getResumeList();
-  }, [user]);
+  }, []);
 
   return (
     <div className="p-10 md:px-20 lg:px-32">
