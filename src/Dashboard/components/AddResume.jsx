@@ -35,7 +35,7 @@ const AddResume = () => {
     };
     GlobalApi.createNewResume(data).then(
       (resp) => {
-        console.log(resp.data.data.id);
+        // console.log(resp.data.data.id);
         if (resp) {
           setLoading(false);
           // console.log(resp);

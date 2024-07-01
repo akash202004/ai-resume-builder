@@ -7,13 +7,14 @@ import GlobalApi from "@/../service/GlobalApi";
 import { toast } from "sonner";
 import { AIchatSession } from "@/../service/AIModel";
 
-// const prompt =
-// //   "Job Title: {jobTitle}, Depends on job title give me summery for my resume within 4-5 lines";
+const prompt =
+  "Job Title: {jobTitle} , Depends on job title give me list of  summery for 3 experience level, Mid Level and Freasher level in 3 -4 lines in array format, With summery and experience_level Field in JSON Format";
 
 const Summery = ({ resumeInfo, setResumeInfo, enableNext }) => {
   const [summery, setSummery] = useState();
-  const [loading, setloading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const params = useParams();
+  const [aiGeneratedSummery, setAiGeneratedSummery] = useState();
 
   useEffect(() => {
     summery &&
@@ -25,7 +26,7 @@ const Summery = ({ resumeInfo, setResumeInfo, enableNext }) => {
 
   const onSave = (e) => {
     e.preventDefault();
-    setloading(true);
+    setLoading(true);
 
     const data = {
       data: {
@@ -37,22 +38,28 @@ const Summery = ({ resumeInfo, setResumeInfo, enableNext }) => {
       (res) => {
         console.log(res);
         enableNext(true);
-        setloading(false);
+        setLoading(false);
         toast.success("Personal Details Saved Successfully");
       },
       (error) => {
         console.log(error);
-        setloading(false);
+        setLoading(false);
       }
     );
   };
 
   const generateSummeryFromAI = async () => {
-    setloading(true);
-    const prompt = `Job Title: ${resumeInfo?.jobTitle}, Depends on job title give me summery for my resume within 4-5 lines in JSON format with field experience Level and Summery with Experience level for Freshers, Junior, Mid, Senior, Expert`;
-    const result = await AIchatSession.sendMessage(prompt);
-    console.log(result.response.text());
-    setloading(false);
+    setLoading(true);
+    const PROMPT = prompt.replace("{jobTitle}", resumeInfo?.jobTitle);
+    try {
+      // const result = await AIchatSession.sendMessage(PROMPT);
+      console.log(JSON.parse(result.data));
+      // setAiGeneratedSummery(finalResult);
+    } catch (error) {
+      console.error("Failed to generate summary from AI:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -92,3 +99,17 @@ const Summery = ({ resumeInfo, setResumeInfo, enableNext }) => {
 };
 
 export default Summery;
+
+{
+  /* {Object.keys(aiGeneratedSummery).map((key) => (
+        <div key={key} className="p-5 shadow-lg my-4 rounded-lg cursor-pointer">
+          <h2 className="font-bold my-1">Job Title: {key}</h2>
+          {Object.keys(aiGeneratedSummery[key]).map((level) => (
+            <div key={level} className="my-2">
+              <h3 className="font-semibold">Experience Level: {level}</h3>
+              <p>{aiGeneratedSummery[key][level]}</p>
+            </div>
+          ))}
+        </div>
+      ))} */
+}
