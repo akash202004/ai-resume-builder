@@ -2,19 +2,25 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import React, { useEffect, useState } from "react";
 import RichTextEditor from "../RichTextEditor";
-
-const formField = {
-  title: "",
-  companyName: "",
-  city: "",
-  state: "",
-  startDate: "",
-  endDate: "",
-  workSummery: "",
-};
+import { LoaderCircle } from "lucide-react";
+import GlobalApi from "@/../service/GlobalApi";
+import { useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 const Experience = ({ resumeInfo, setResumeInfo, enableNext }) => {
-  const [experienceList, setExperienceList] = useState([formField]);
+  const [loading, setLoading] = useState(false);
+  const params = useParams();
+  const [experienceList, setExperienceList] = useState([
+    {
+      title: "",
+      companyName: "",
+      city: "",
+      state: "",
+      startDate: "",
+      endDate: "",
+      workSummery: "",
+    },
+  ]);
 
   const handleChange = (index, event) => {
     const newEntries = experienceList.slice();
@@ -37,6 +43,7 @@ const Experience = ({ resumeInfo, setResumeInfo, enableNext }) => {
       },
     ]);
   };
+
   const RemoveExperinece = () => {
     setExperienceList(experienceList.slice(0, -1));
   };
@@ -54,6 +61,26 @@ const Experience = ({ resumeInfo, setResumeInfo, enableNext }) => {
       experience: experienceList,
     });
   }, [experienceList]);
+
+  const onSave = () => {
+    setLoading(true);
+    const data = {
+      data: {
+        experience: experienceList,
+      },
+    };
+    GlobalApi.updateResumeDetails(params.resumeId, data).then(
+      (res) => {
+        setLoading(false);
+        toast.success("Experience Details Updated Successfully");
+      },
+      (error) => {
+        console.log(error);
+        setLoading(true);
+        toast.error("Error Occured");
+      }
+    );
+  };
 
   return (
     <div className="p-5 shadow-lg rounded-lg border-t-violet-500  border-t-4 mt-5">
@@ -138,7 +165,9 @@ const Experience = ({ resumeInfo, setResumeInfo, enableNext }) => {
           </Button>
         </div>
 
-        <Button>Save</Button>
+        <Button disabled={loading} onClick={() => onSave()}>
+          {loading ? <LoaderCircle className="animate-spin" /> : "Save"}
+        </Button>
       </div>
     </div>
   );

@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight, LayoutGrid } from "lucide-react";
 import Summery from "./Form/Summery";
 import Experience from "./Form/Experience";
+import Education from "./Form/Education";
+import Skills from "./Form/Skills";
 
 const FormSection = () => {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
@@ -54,6 +56,18 @@ const FormSection = () => {
         />
       ) : activeFormIndex == 3 ? (
         <Experience
+          enableNext={(v) => setEnableNext(v)}
+          resumeInfo={resumeInfo}
+          setResumeInfo={setResumeInfo}
+        />
+      ) : activeFormIndex == 4 ? (
+        <Education
+          enableNext={(v) => setEnableNext(v)}
+          resumeInfo={resumeInfo}
+          setResumeInfo={setResumeInfo}
+        />
+      ) : activeFormIndex == 5 ? (
+        <Skills
           enableNext={(v) => setEnableNext(v)}
           resumeInfo={resumeInfo}
           setResumeInfo={setResumeInfo}

@@ -6,18 +6,18 @@ import ResumeCardItem from "./components/ResumeCardItem";
 
 const index = () => {
   const [resumeList, setResumeList] = useState([]);
-  const user = useUser();
+  const { user } = useUser();
   const getResumeList = () => {
     GlobalApi.getUserResumes(user?.primaryEmailAddress?.emailAddress).then(
       (res) => {
         setResumeList(res.data.data);
-        console.log(res.data.data);
+        // console.log(res.data.data);
       }
     );
   };
   useEffect(() => {
     user && getResumeList();
-  }, []);
+  }, [user]);
 
   return (
     <div className="p-10 md:px-20 lg:px-32">
@@ -25,10 +25,20 @@ const index = () => {
       <p>Start Creating AI Resume to your next job role</p>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 mt-10 gap-6">
         <AddResume />
-        {resumeList.length > 0 &&
-          resumeList.map((resume, index) => (
-            <ResumeCardItem key={index} resume={resume} />
-          ))}
+        {resumeList.length > 0
+          ? resumeList.map((resume, index) => (
+              <ResumeCardItem
+                key={index}
+                resume={resume}
+                refreshData={getResumeList}
+              />
+            ))
+          : [1, 2, 3, 4].map((item, index) => (
+              <div
+                key={index}
+                className="h-[280px] rounded-lg bg-slate-200 animate-pulse"
+              ></div>
+            ))}
       </div>
     </div>
   );

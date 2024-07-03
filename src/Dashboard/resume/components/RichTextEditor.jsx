@@ -42,20 +42,21 @@ const RichTextEditor = ({ onRichTextEditorChange, index }) => {
   //   };
 
   const generateSummaryFromAI = async () => {
-    if (!resumeInfo?.Experience[index]?.title) {
+    if (!resumeInfo?.experience[index]?.title) {
       toast("Please Add Position Title");
       return;
     }
     setLoading(true);
     const prompt = PROMPT.replace(
       "{positionTitle}",
-      resumeInfo.Experience[index].title
+      resumeInfo.experience[index].title
     );
 
     const result = await AIchatSession.sendMessage(prompt);
-    console.log(result.response.text());
-    const resp = result.response.text();
-    setValue(resp.replace("[", "").replace("]", ""));
+    // console.log(result.response.text());
+    const resp = JSON.parse(result.response.text());
+    console.log(resp);
+    setValue(resp.bullet_points[0]);
     setLoading(false);
   };
 
