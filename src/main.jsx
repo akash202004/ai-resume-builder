@@ -39,6 +39,10 @@ const router = createBrowserRouter([
     path: "/auth/sign-in",
     element: <SignInPage />,
   },
+  {
+    path: "/my-resume/:resumeId/view",
+    element: <ViewResume />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

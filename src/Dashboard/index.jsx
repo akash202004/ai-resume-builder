@@ -15,6 +15,7 @@ const index = () => {
       }
     );
   };
+
   useEffect(() => {
     user && getResumeList();
   }, [user]);

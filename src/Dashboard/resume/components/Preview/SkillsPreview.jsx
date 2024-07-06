@@ -26,7 +26,7 @@ const SkillsPreview = ({ resumeInfo }) => {
                 className="h-2"
                 style={{
                   backgroundColor: resumeInfo?.themeColor,
-                  width: skill?.rating * 20 + "%",
+                  width: skill?.rating + "%",
                 }}
               ></div>
             </div>

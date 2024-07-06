@@ -78,7 +78,7 @@ const Skills = ({ resumeInfo, setResumeInfo, enableNext }) => {
             </div>
             <Rating
               style={{ maxWidth: 120 }}
-              value={skill.rating}
+              value={skill.rating * 100}
               onChange={(v) => handleChange(index, "rating", v)}
             />
           </div>
